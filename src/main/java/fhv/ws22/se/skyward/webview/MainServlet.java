@@ -1,7 +1,5 @@
 package fhv.ws22.se.skyward.webview;
 
-import com.google.inject.Inject;
-import com.google.inject.Injector;
 import fhv.ws22.se.skyward.domain.SessionService;
 import fhv.ws22.se.skyward.domain.dtos.AbstractDto;
 import fhv.ws22.se.skyward.domain.dtos.CustomerDto;
@@ -19,8 +17,7 @@ public class MainServlet extends HttpServlet {
     private SessionService session;
 
     public void init() {
-        Injector injector = (Injector) getServletContext().getAttribute("injector");
-        session = injector.getInstance(SessionService.class);
+        session = (SessionService) getServletContext().getAttribute("session");
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -1,15 +1,21 @@
 package fhv.ws22.se.skyward;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import fhv.ws22.se.skyward.domain.SessionService;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
+
+import java.rmi.Naming;
 
 public class CustomServletContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        Injector injector = Guice.createInjector(new AppConfig());
-        sce.getServletContext().setAttribute("injector", injector);
-        System.out.println("Context initialized");
+        SessionService session = null;
+        try {
+            session = (SessionService) Naming.lookup("rmi://localhost/SkywardDomainSession");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        sce.getServletContext().setAttribute("session", session);
     }
 }
