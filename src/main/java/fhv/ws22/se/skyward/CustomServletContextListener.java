@@ -2,11 +2,14 @@ package fhv.ws22.se.skyward;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.servlet.GuiceServletContextListener;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 
-public class CustomServletContextListener extends GuiceServletContextListener {
+public class CustomServletContextListener implements ServletContextListener {
     @Override
-    protected Injector getInjector() {
-        return Guice.createInjector(new CustomServletModule());
+    public void contextInitialized(ServletContextEvent sce) {
+        Injector injector = Guice.createInjector(new AppConfig());
+        sce.getServletContext().setAttribute("injector", injector);
+        System.out.println("Context initialized");
     }
 }
