@@ -1,6 +1,7 @@
 package fhv.ws22.se.skyward.webview;
 
 import fhv.ws22.se.skyward.domain.SessionService;
+import fhv.ws22.se.skyward.domain.dtos.AddressDto;
 import fhv.ws22.se.skyward.domain.dtos.BookingDto;
 import fhv.ws22.se.skyward.domain.dtos.CustomerDto;
 import jakarta.servlet.ServletException;
@@ -48,31 +49,40 @@ public class Controller extends HttpServlet {
                 "    </tr>\n" +
                 "  </thead>");
 
-            pw.println("<tr>");
-            pw.println("<td>"+ checkIn + "</td>");
-            pw.println("<td>"+ checkOut + "</td>");
-            pw.println("<td>"+ room + "</td>");
-            pw.println("<td>"+ fName + "</td>");
-            pw.println("<td>"+ lName + "</td>");
-            pw.println("<td>"+ street + "</td>");
-            pw.println("<td>"+ number + "</td>");
-            pw.println("<td>"+ zip + "</td>");
-            pw.println("<td>"+ city + "</td>");
-            pw.println("<td>"+ country + "</td>");
-            pw.println("</tr>");
+        pw.println("<tr>");
+        pw.println("<td>"+ checkIn + "</td>");
+        pw.println("<td>"+ checkOut + "</td>");
+        pw.println("<td>"+ room + "</td>");
+        pw.println("<td>"+ fName + "</td>");
+        pw.println("<td>"+ lName + "</td>");
+        pw.println("<td>"+ street + "</td>");
+        pw.println("<td>"+ number + "</td>");
+        pw.println("<td>"+ zip + "</td>");
+        pw.println("<td>"+ city + "</td>");
+        pw.println("<td>"+ country + "</td>");
+        pw.println("</tr>");
 
-            BookingDto booking = new BookingDto();
-            CustomerDto customer = new CustomerDto();
-            //booking.setCheckInDateTime(new LocalDateTime(new LocalDate(checkIn)));
-            session.add(booking);
-            customer.setFirstName("Florian");
-            customer.setLastName("Schiemer");
-            session.add(customer);
+        BookingDto booking = new BookingDto();
+        //booking.setCheckInDateTime(new LocalDateTime(new LocalDate(checkIn)));
+        session.add(booking);
+
+        CustomerDto customer = new CustomerDto();
+        AddressDto address = new AddressDto();
+        address.setStreet("Asdf");
+        address.setHouseNumber(34);
+        address.setZipCode(1234);
+        address.setCity("Asdf");
+        address.setCountry("Asdf");
+
+        customer.setFirstName("Florian");
+        customer.setLastName("Schiemer");
+        customer.setAddress(address);
+        System.out.println(customer);
+        session.add(customer);
 
         pw.println("</div>");
         pw.println("</div>");
 
 
     }
-
 }
