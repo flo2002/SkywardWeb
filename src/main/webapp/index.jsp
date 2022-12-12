@@ -5,26 +5,21 @@
     <link rel="stylesheet" href="styles.css" type="text/css" media="all">
 </head>
 <body>
-<div class="header">
-    <h1>Skyward</h1>
-</div>
+<ul class="navbar">
+    <a><img class="logo" src="SkyWardIcon.png" alt="Icon" style=width:70px;height:70px;/></a>
+    <li class="navbar"><a class="active" href="index.jsp">Home</a></li>
+    <li class="navbar"><a href="Reservation.jsp">Reservation</a></li>
+</ul>
 
-<div class="sidenav">
-    <a><img src="SkyWardIcon.png" alt="Icon" style=width:70px;height:70px;></a>
-    <a href="index.jsp">Home</a>
-    <a href="Reservation.jsp">Reservation</a>
-    <a href="About.jsp">About</a>
-    <a href="Contact.jsp">Contact</a>
-</div>
-
-<div class="main">
-    <h3>Maker your online Reservation on our Website!</h3>
-    <p>Go now to the Reservation Tab</p>
-
-
+<div class="image">
+    <div class="content">
+        <ul class="open">
+            <h3>Create your online Reservation on our Website!</h3>
+            <p>Go now to the Reservation Tab</p>
+        </ul>
+    </div>
 </div>
 
 </body>
-<script>
-</script>
+
 </html>

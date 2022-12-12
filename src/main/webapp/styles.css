@@ -390,3 +390,147 @@ button:hover {
 .container span a{
     color: green;
 }
+
+
+/*Webseite*/
+
+ul.open {
+    list-style-type: square;
+}
+
+ul.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li.navbar {
+    float: left;
+}
+
+li.navbar a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 36px 40px;
+    text-decoration: none;
+}
+
+li.navbar a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #04AA6D;
+}
+
+.image {
+    min-height: 100vh;
+    background-image: url("backgroundweb.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 30px;
+}
+
+.content {
+    background: white;
+    padding: 15px;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+.logo {
+    width: 75px;
+    height: 75px;
+    position: absolute;
+    left: calc(( 100% - 50px)/2);
+}
+
+form ul li {
+    list-style: none;
+}
+
+.container {
+    padding: 16px;
+    background-color: white;
+}
+
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+
+.registerbtn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 25%;
+    opacity: 0.9;
+    border-radius: 8px;
+}
+
+.registerbtn:hover {
+    opacity: 1;
+}
+
+select {
+    width: 25%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+    text-align: center;
+    border-radius: 8px;
+}
+
+input[type=text] {
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+    text-align: center;
+    border-radius: 8px;
+    width: 300px;
+    padding: 12px;
+}
+
+input[type=text]:focus {
+    background-color: #ddd;
+    outline: none;
+    width: 300px;
+    padding: 12px;
+}
+
+form, label, input {
+    font-family: sans-serif;
+}
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.form-street {
+    display: inline-block;
+    vertical-align: middle;
+}
+

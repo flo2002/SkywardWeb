@@ -12,6 +12,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @WebServlet(urlPatterns = {"/controller"})
 public class Controller extends HttpServlet {
@@ -19,7 +26,16 @@ public class Controller extends HttpServlet {
     private SessionService session;
 
     public void init() {
+
         session = (SessionService) getServletContext().getAttribute("session");
+
+        // Bind the SessionService to the RMI registry
+        try {
+            Registry registry = LocateRegistry.getRegistry();
+            registry.rebind("session", session);
+        } catch (RemoteException e) {
+            // Handle the error
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -31,10 +47,10 @@ public class Controller extends HttpServlet {
         String checkIn = request.getParameter("check-in-date");
         String checkOut = request.getParameter("check-out-date");
         String room = request.getParameter("room-type");
-        String fName = request.getParameter("first-name");
-        String lName = request.getParameter("last-name");
+        String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
         String street = request.getParameter("street");
-        String number = request.getParameter("number");
+        String number = request.getParameter("housenumber");
         String zip = request.getParameter("zip");
         String city = request.getParameter("city");
         String country = request.getParameter("country");
@@ -53,8 +69,8 @@ public class Controller extends HttpServlet {
         pw.println("<td>"+ checkIn + "</td>");
         pw.println("<td>"+ checkOut + "</td>");
         pw.println("<td>"+ room + "</td>");
-        pw.println("<td>"+ fName + "</td>");
-        pw.println("<td>"+ lName + "</td>");
+        pw.println("<td>"+ firstname + "</td>");
+        pw.println("<td>"+ lastname + "</td>");
         pw.println("<td>"+ street + "</td>");
         pw.println("<td>"+ number + "</td>");
         pw.println("<td>"+ zip + "</td>");
@@ -63,26 +79,29 @@ public class Controller extends HttpServlet {
         pw.println("</tr>");
 
         BookingDto booking = new BookingDto();
-        //booking.setCheckInDateTime(new LocalDateTime(new LocalDate(checkIn)));
-        session.add(booking);
-
         CustomerDto customer = new CustomerDto();
         AddressDto address = new AddressDto();
-        address.setStreet("Asdf");
-        address.setHouseNumber(34);
-        address.setZipCode(1234);
-        address.setCity("Asdf");
-        address.setCountry("Asdf");
 
-        customer.setFirstName("Florian");
-        customer.setLastName("Schiemer");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate checkInDate = LocalDate.parse(checkIn, formatter);
+        LocalDateTime checkInDateTime = LocalDateTime.of(checkInDate, LocalTime.MIDNIGHT);
+        booking.setCheckInDateTime(checkInDateTime);
+
+        address.setStreet(street);
+        address.setHouseNumber(Integer.valueOf(number));
+        address.setZipCode(Integer.valueOf(zip));
+        address.setCity(city);
+        address.setCountry(country);
+
+        customer.setFirstName(firstname);
+        customer.setLastName(lastname);
         customer.setAddress(address);
-        System.out.println(customer);
+
+        session.add(booking);
         session.add(customer);
 
         pw.println("</div>");
         pw.println("</div>");
-
 
     }
 }

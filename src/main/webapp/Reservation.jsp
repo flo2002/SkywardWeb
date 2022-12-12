@@ -7,48 +7,83 @@
 </head>
 <body>
 
-<div class="sidenav">
-    <a><img src="SkyWardIcon.png" alt="Icon" style=width:70px;height:70px;></a>
-    <a href="index.jsp">Home</a>
-    <a href="Reservation.jsp">Reservation</a>
-    <a href="About.jsp">About</a>
-    <a href="Contact.jsp">Contact</a>
-</div>
-<div class="main">
-    <h1>Reservation Form</h1>
-    <form class="form" action="./controller" method="get">
-        <label for="first-name">First Name:</label>
-        <input type="text" id="first-name" name="first-name"><br>
-        <label for="last-name">Last Name:</label>
-        <input type="text" id="last-name" name="last-name"><br>
-        <label for="street">Street:</label>
-        <input type="text" id="street" name="street"><br>
-        <label for="number">Number:</label>
-        <input type="text" id="number" name="number">
-        <label for="zip">Zip:</label>
-        <input type="text" id="zip" name="zip"><br>
-        <label for="city">City:</label>
-        <input type="text" id="city" name="city">
-        <label for="country">Country:</label>
-        <input type="text" id="country" name="country"><br>
-        <label for="check-in-date">Check-In Date:</label>
-        <input type="date" id="check-in-date" name="check-in-date">
-        <label for="check-out-date">Check-Out Date:</label>
-        <input type="date" id="check-out-date" name="check-out-date"><br>
-        <label for="room-type">Room Type:</label>
-        <select id="room-type" name="room-type">
-            <option value="single">Single</option>
-            <option value="double">Double</option>
-            <option value="triple">Triple</option>
-            <option value="twin">Twin</option>
-            <option value="queen">Queen</option>
-        </select>
-        <br>
-        <button class="confirmbtn" type="submit" action="./controller">Confirm</button>
-    </form>
+<ul class="navbar">
+    <a><img class="logo" src="SkyWardIcon.png" alt="Icon" style=width:70px;height:70px;/></a>
+    <li class="navbar"><a href="index.jsp">Home</a></li>
+    <li class="navbar"><a class="active" href="Reservation.jsp">Reservation</a></li>
+</ul>
 
-</div>
+<div class="image">
+    <div class="content">
 
+                <form class="regist" name='registration' action="./controller" method="get">
+                    <h1>Reservation Form</h1>
+                    <p>Please fill to create a reservation.</p>
+                    <hr>
+
+                    <div class="form-group">
+                        <label for="firstname"><b>Firstname:</b></label><br>
+                        <input type="text" name="firstname" id="firstname"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastname"><b>Lastname:</b></label><br>
+                        <input type="text" name="lastname" id="lastname"/>
+                    </div>
+
+                    <div class="form-street">
+                        <label for="street"><b>Street:</b></label><br>
+                        <input type="text" name="street" id="street" style="width: 80%;"/>
+                    </div>
+
+                    <div class="form-street">
+                        <label for="housenumber"><b>Housenumber:</b></label><br>
+                        <input type="text" name="housenumber" id="housenumber" style="width: 45%;"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="zip"><b>Zip:</b></label><br>
+                        <input type="text" name="zip" id="zip"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city"><b>City:</b></label><br>
+                        <input type="text" name="city" id="city"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="country"><b>Country:</b></label><br>
+                        <input type="text" name="country" id="country"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="check-in-date"><b>Check-in-date:</b></label><br>
+                        <input type="date" name="check-in-date" id="check-in-date"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="check-out-date"><b>Check-out-date:</b></label><br>
+                        <input type="date" name="check-out-date" id="check-out-date"/>
+                    </div>
+
+                    <br>
+
+                    <div class="form-group">
+                        <select name="roomtype" id="roomtype">
+                            <option value="Default">(Please select a country)</option>
+                            <option value="single">Single</option>
+                            <option value="double">Double</option>
+                            <option value="triple">Triple</option>
+                            <option value="twin">Twin</option>
+                            <option value="queen">Queen</option>
+                        </select>
+                    </div>
+                <br>
+
+                <button class="registerbtn" type="submit" action="./controller">Confirm</button>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>
