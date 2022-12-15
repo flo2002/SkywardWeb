@@ -27,11 +27,11 @@
     <div class="center">
         <img id="image" src="rudolf.png" style="display:none; width: 500px; height: 500px;
         margin: 0 auto;">
-        <div class="title">Willkommen bei SkyWard</div>
-        <div class="sub_title">Erstellen Sie hier ihre Reservierung für ihren Traum Urlaub</div>
+        <div class="title">Welcome to Skyward</div>
+        <div class="sub_title">Create your reservations for your dream holiday</div>
         <div class="btns">
-            <button id="suprise" onclick="flyImage()">Überraschung</button>
-            <button onclick="window.location.href='Reservation.jsp';">Reservieren</button>
+            <button id="suprise" onclick="flyImage()">Surprise</button>
+            <button onclick="window.location.href='Reservation.jsp';">Reservation</button>
         </div>
     </div>
 </div>

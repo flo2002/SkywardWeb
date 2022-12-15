@@ -40,7 +40,7 @@ background-attachment: fixed">
 <nav>
     <div class="menu">
         <div class="logo">
-            <a href="#">Skyward</a>
+            <a href="index.jsp">Skyward</a>
         </div>
         <ul>
             <li class="navbar"><a href="index.jsp">Home</a></li>
@@ -49,7 +49,7 @@ background-attachment: fixed">
     </div>
 </nav>
 
-    <div style="float: left">
+    <div style="display: flex;justify-content: center">
         <div class="whitebackground">
 
             <!-- Überschrift -->
@@ -118,7 +118,7 @@ background-attachment: fixed">
                                 <!-- HNr. -->
                                 <td>
                                     <div class="input-control">
-                                        <label for="housenumber" class="bold" style="margin-left: 50px">HNr.
+                                        <label for="housenumber" class="bold" style="margin-left: 50px">House
                                             <br/></label>
                                         <input class="sizesmall" name="housenumber" id="housenumber" type="text" required>
                                         <div class="error" style="margin-left: 50px"></div>
@@ -192,6 +192,18 @@ background-attachment: fixed">
                             <div class="error"></div>
                         </div>
 
+                        <!-- Customer Type -->
+                        <div class="input-control">
+                            <label for="customerType" class="bold">Type <br/></label>
+                            <select name="customerType" id="customerType" class="sizebig">
+
+                                <option value="select" selected>Individual</option>
+                                <option value="select">Travel Agency</option>
+                                <option value="select">Group</option>
+                            </select>
+                            <div class="error"></div>
+                        </div>
+
                         <!-- Email -->
                         <div class="input-control">
                             <label for="email" class="bold">E-Mail Address <br/> </label>
@@ -201,7 +213,7 @@ background-attachment: fixed">
 
                         <div style="margin-top: 30px">
                             <button type="reset" class="reset">Reset</button>
-                            <button type="submit" action="./controller" class="send">Send</button>
+                            <button type="submit" action="./controller" class="send">Complete Reservation</button>
                         </div>
                     </form>
                 </div>
