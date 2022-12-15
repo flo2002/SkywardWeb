@@ -54,6 +54,7 @@ public class Controller extends HttpServlet {
         String zip = request.getParameter("zip");
         String city = request.getParameter("city");
         String country = request.getParameter("country");
+        String email = request.getParameter("email");
 
         pw.println("<link rel=\"stylesheet\" href=\"stylesheet.css\" type=\"text/css\" media=\"all\">");
         pw.println("<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">\n");
@@ -76,6 +77,7 @@ public class Controller extends HttpServlet {
         pw.println("<td>"+ zip + "</td>");
         pw.println("<td>"+ city + "</td>");
         pw.println("<td>"+ country + "</td>");
+        pw.println("<td>"+ email + "</td>");
         pw.println("</tr>");
 
         BookingDto booking = new BookingDto();
