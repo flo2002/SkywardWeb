@@ -115,11 +115,9 @@ public class Controller extends HttpServlet {
         booking.setRooms(rooms);
 
 
-
-
-//        session.add(address);
-//        session.add(customer);
-//        session.add(booking);
+        session.add(address);
+        session.add(customer);
+        session.add(booking);
 
 
 //        pw.println("</div>");
