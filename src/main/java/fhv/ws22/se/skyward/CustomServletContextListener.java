@@ -14,6 +14,7 @@ public class CustomServletContextListener implements ServletContextListener {
             session = (SessionService) Naming.lookup("rmi://localhost/SkywardDomainSession");
         } catch (Exception e) {
             e.printStackTrace();
+            System.exit(1);
         }
 
         sce.getServletContext().setAttribute("session", session);

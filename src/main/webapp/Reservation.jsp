@@ -3,89 +3,222 @@
 
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="web.css">
     <script src="javascript.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script>
+        $(function(){
+            var dtToday = new Date();
+
+            var month = dtToday.getMonth() + 1;
+            var day = dtToday.getDate();
+            var year = dtToday.getFullYear();
+            if(month < 10)
+                month = '0' + month.toString();
+            if(day < 10)
+                day = '0' + day.toString();
+
+            var maxDate = year + '-' + month + '-' + day;
+
+            $('#check-in-date').attr('min', maxDate);
+            $('#check-out-date').attr('min', maxDate);
+        });
+    </script>
 </head>
-<body>
 
-<ul class="navbar">
-    <a><img class="logo" src="SkyWardIcon.png" alt="Icon" style=width:70px;height:70px;/></a>
-    <li class="navbar"><a href="index.jsp">Home</a></li>
-    <li class="navbar"><a class="active" href="Reservation.jsp">Reservation</a></li>
-</ul>
+<body style="font-family: Arial;
+background-image: url('backgroundweb.jpg');
+background-repeat: repeat;
+background-attachment: fixed">
 
-<div class="image">
-    <div class="content">
 
-                <form id="booking-form" class="regist" name='registration' action="./controller" onSubmit="return formValidation();" method="get">
-                    <h1>Reservation Form</h1>
-                    <p>Please fill to create a reservation.</p>
-                    <hr>
-
-                    <div class="form-group">
-                        <label for="firstname"><b>Firstname:</b></label><br>
-                        <input type="text" name="firstname" id="firstname" required/>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="lastname"><b>Lastname:</b></label><br>
-                        <input type="text" name="lastname" id="lastname" required/>
-                    </div>
-
-                    <div class="form-street">
-                        <label for="street"><b>Street:</b></label><br>
-                        <input type="text" name="street" id="street" style="width: 80%;" required/>
-                    </div>
-
-                    <div class="form-street">
-                        <label for="housenumber"><b>Housenumber:</b></label><br>
-                        <input type="text" name="housenumber" id="housenumber" style="width: 45%;" required/>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="zip"><b>Zip:</b></label><br>
-                        <input type="text" name="zip" id="zip" required/>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="city"><b>City:</b></label><br>
-                        <input type="text" name="city" id="city" required/>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="country"><b>Country:</b></label><br>
-                        <input type="text" name="country" id="country" required/>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="check-in-date"><b>Check-in-date:</b></label><br>
-                        <input type="date" name="check-in-date" id="check-in-date" min="1900-01-01" required/>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="check-out-date"><b>Check-out-date:</b></label><br>
-                        <input type="date" name="check-out-date" id="check-out-date" required/>
-                    </div>
-
-                    <br>
-
-                    <div class="form-group">
-                        <select name="roomtype" id="roomtype" required>
-                            <option value="Default">(Please select a country)</option>
-                            <option value="single">Single</option>
-                            <option value="double">Double</option>
-                            <option value="triple">Triple</option>
-                            <option value="twin">Twin</option>
-                            <option value="queen">Queen</option>
-                        </select>
-                    </div>
-                <br>
-
-                    <button type="reset" class="registerbtn" type="submit" style="background-color: red">Delete</button>
-
-                <button class="registerbtn" type="submit" action="./controller">Confirm</button>
-                </form>
+<nav>
+    <div class="menu">
+        <div class="logo">
+            <a href="index.jsp">Skyward</a>
+        </div>
+        <ul>
+            <li class="navbar"><a href="index.jsp">Home</a></li>
+            <li class="navbar"><a class="active" href="Reservation.jsp">Reservation</a></li>
+        </ul>
     </div>
+</nav>
+
+    <div style="display: flex;justify-content: center">
+        <div class="whitebackground">
+
+            <!-- Überschrift -->
+            <div class="centerContent">
+                <h1>Make a Reservation</h1>
+                <h3>Fill in this form to create a reservation.</h3>
+                <div class="container">
+
+                    <form id="form" action="./controller" onsubmit="return formValidation()" name="registration" method="GET">
+
+                        <table id="dates">
+                            <tr>
+                                <td>
+                                    <div class="input-control">
+                                        <label for="check-in-date" class="bold">Checkin:<br/></label>
+                                        <input type="date" id="check-in-date" name="checkin" required>
+                                        <div class="error"></div>
+                                    </div>
+                                </td>
+
+
+                                <td>
+                                    <div class="input-control">
+                                        <label for="check-out-date" style="margin-left: 50px" class="bold">Checkout:<br/></label>
+                                        <input type="date" id="check-out-date" name="checkout" required >
+                                        <div class="error"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Vorname und Nachname -->
+                        <table id="name">
+                            <tr>
+                                <!-- Vorname -->
+                                <td>
+                                    <div class="input-control">
+                                        <label for="firstname" class="bold">Firstname <br/></label>
+                                        <input class="name" name="firstname" id="firstname" type="text" required>
+                                        <div class="error"></div>
+                                    </div>
+                                </td>
+
+                                <!-- Nachname -->
+                                <td>
+                                    <div class="input-control">
+                                        <label for="lastname" style="margin-left: 50px" class="bold">Lastname <br/></label>
+                                        <input class="name" name="lastname" id="lastname" type="text" required>
+                                        <div class="error" style="margin-left: 50px"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Adresse -->
+                        <table id="adress1">
+                            <tr>
+                                <!-- Straße -->
+                                <td>
+                                    <div class="input-control">
+                                        <label for="street" class="bold">Street<br/></label>
+                                        <input class="sizebig" name="street" id="street" type="text" required>
+                                        <div class="error"></div>
+                                    </div>
+                                </td>
+                                <!-- HNr. -->
+                                <td>
+                                    <div class="input-control">
+                                        <label for="housenumber" class="bold" style="margin-left: 50px">House
+                                            <br/></label>
+                                        <input class="sizesmall" name="housenumber" id="housenumber" type="text" required>
+                                        <div class="error" style="margin-left: 50px"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table id="adress2">
+                            <tr>
+                                <!-- Stadt -->
+                                <td>
+                                    <div class="input-control">
+                                        <label for="city" class="bold">City<br/></label>
+                                        <input class="sizebig" name="city" id="city" type="text" required>
+                                        <div class="error"></div>
+                                    </div>
+                                </td>
+                                <!-- PLZ -->
+                                <td>
+                                    <div class="input-control">
+                                        <label for="zip" class="bold" style="margin-left: 50px">ZIP Code
+                                            <br/></label>
+                                        <input class="sizesmall" name="zip" id="zip" type="text" required>
+                                        <div class="error" style="margin-left: 50px"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Land -->
+                        <!-- Nationalität -->
+                        <div class="input-control">
+                            <label for="country" class="bold">Nationality <br/></label>
+                            <select name="country" id="country" class="sizebig">
+                                <option value="" selected>--Please select--</option>
+                                <option value="Africa">Africa</option>
+                                <option value="Asia">Asia</option>
+                                <option value="Australia">Australia</option>
+                                <option value="Austria">Austria</option>
+                                <option value="Belgium">Belgium</option>
+                                <option value="Bulgaria">Bulgaria</option>
+                                <option value="Central America">Central America</option>
+                                <option value="Croatia">Croatia</option>
+                                <option value="Cyprus">Cyprus</option>
+                                <option value="Czech Republic">Czech Republic</option>
+                                <option value="Denmark">Denmark</option>
+                                <option value="Estonia">Estonia</option>
+                                <option value="Finnland">Finnland</option>
+                                <option value="France">France</option>
+                                <option value="Germany">Germany</option>
+                                <option value="Greece">Greece</option>
+                                <option value="Hungary">Hungary</option>
+                                <option value="Ireland">Ireland</option>
+                                <option value="Italy">Italy</option>
+                                <option value="Latvia">Latvia</option>
+                                <option value="Liechtenstein">Liechtenstein</option>
+                                <option value="Luxembourg">Luxembourg</option>
+                                <option value="Malta">Malta</option>
+                                <option value="Netherlands">Netherlands</option>
+                                <option value="North America">North America</option>
+                                <option value="Poland">Poland</option>
+                                <option value="Portugal">Portugal</option>
+                                <option value="Romania">Romania</option>
+                                <option value="Slovakia">Slovakia</option>
+                                <option value="South America">South America</option>
+                                <option value="Spain">Spain</option>
+                                <option value="Sweden">Sweden</option>
+                                <option value="Switzerland">Switzerland</option>
+                            </select>
+                            <div class="error"></div>
+                        </div>
+
+                        <!-- Customer Type -->
+                        <div class="input-control">
+                            <label for="customerType" class="bold">Type <br/></label>
+                            <select name="customerType" id="customerType" class="sizebig">
+
+                                <option value="select" selected>Individual</option>
+                                <option value="select">Travel Agency</option>
+                                <option value="select">Group</option>
+                            </select>
+                            <div class="error"></div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="input-control">
+                            <label for="email" class="bold">E-Mail Address <br/> </label>
+                            <input class="sizebig" name="email" id="email" type="text" required>
+                            <div class="error"></div>
+                        </div>
+
+                        <div style="margin-top: 30px">
+                            <button type="reset" class="reset">Reset</button>
+                            <button type="submit" action="./controller" class="send">Complete Reservation</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 </div>
 
 </body>
