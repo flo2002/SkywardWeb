@@ -1,15 +1,32 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="web.css">
-    <script src="javascript.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="javascript.js"></script>
+    <script>
+        $(document).on("click", "#buttonLoadRooms", function() {
+            $.get("list-available-rooms?checkin=" + document.getElementById("check-in-date").value + "&checkout=" + document.getElementById("check-out-date").value, function(responseJson) {
+                var $select = $("#dropdownlist");
+                $select.find("option").remove();
+                $.each(responseJson, function(index, room) {
+                    $("<option>").val(room.roomNumber).text(room.roomNumber + " " + room.roomTypeName).appendTo($select);
+                });
+            });
+        });
+        $(document).on("click", "#buttonSubmit", function() {
+            var params = {rooms : $("#dropdownlist option:selected").text()};
+            $.post("list-available-rooms", $.param(params), function(responseText) {
+                alert(responseText);
+            });
+        });
+    </script>
 
     <script>
         $(function(){
@@ -52,7 +69,7 @@ background-attachment: fixed">
     <div style="display: flex;justify-content: center">
         <div class="whitebackground">
 
-            <!-- Ãœberschrift -->
+            <!-- Überschrift -->
             <div class="centerContent">
                 <h1>Make a Reservation</h1>
                 <h3>Fill in this form to create a reservation.</h3>
@@ -107,7 +124,7 @@ background-attachment: fixed">
                         <!-- Adresse -->
                         <table id="adress1">
                             <tr>
-                                <!-- StraÃŸe -->
+                                <!-- Straße -->
                                 <td>
                                     <div class="input-control">
                                         <label for="street" class="bold">Street<br/></label>
@@ -150,7 +167,7 @@ background-attachment: fixed">
                         </table>
 
                         <!-- Land -->
-                        <!-- NationalitÃ¤t -->
+                        <!-- Nationalität -->
                         <div class="input-control">
                             <label for="country" class="bold">Nationality <br/></label>
                             <select name="country" id="country" class="sizebig">
@@ -204,6 +221,13 @@ background-attachment: fixed">
                             <div class="error"></div>
                         </div>
 
+                        <!-- Rooms -->
+                        <div>
+                            <button type="button" id="buttonLoadRooms">Load Rooms</button>
+                            <select id="dropdownlist"></select><br>
+                            <button id="buttonSubmit">Add Room</button>
+                        </div>
+
                         <!-- Email -->
                         <div class="input-control">
                             <label for="email" class="bold">E-Mail Address <br/> </label>
@@ -213,7 +237,7 @@ background-attachment: fixed">
 
                         <div style="margin-top: 30px">
                             <button type="reset" class="reset">Reset</button>
-                            <button type="submit" action="./controller" class="send">Complete Reservation</button>
+                            <button type="submit" id="submit" action="./controller" class="send">Complete Reservation</button>
                         </div>
                     </form>
                 </div>

@@ -2,6 +2,7 @@ module fhv.ws22.se.skyward {
     requires org.apache.logging.log4j;
     requires jakarta.servlet;
     requires java.rmi;
+    requires com.google.gson;
 
 
     exports fhv.ws22.se.skyward;
