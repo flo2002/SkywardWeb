@@ -12,6 +12,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.google.gson.Gson;
 
@@ -38,7 +40,15 @@ public class ListAvailableRoomsController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-        String selectedRoom = request.getParameter("rooms");
-        System.out.println(selectedRoom);
+        String selectedRooms = request.getParameter("rooms");
+        System.out.println(selectedRooms);
+        Pattern p = Pattern.compile("/[0-9]+/");
+        Matcher m = p.matcher(selectedRooms);
+
+        while (m.find()) {
+            String roomNumber = m.group();
+            System.out.println(roomNumber);
+        }
+
     }
 }

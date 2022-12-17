@@ -13,7 +13,7 @@
     <script>
         $(document).on("click", "#buttonLoadRooms", function() {
             $.get("list-available-rooms?checkin=" + document.getElementById("check-in-date").value + "&checkout=" + document.getElementById("check-out-date").value, function(responseJson) {
-                var $select = $("#dropdownlist");
+                var $select = $("#roomDropDownList");
                 $select.find("option").remove();
                 $.each(responseJson, function(index, room) {
                     $("<option>").val(room.roomNumber).text(room.roomNumber + " " + room.roomTypeName).appendTo($select);
@@ -21,10 +21,8 @@
             });
         });
         $(document).on("click", "#buttonSubmit", function() {
-            var params = {rooms : $("#dropdownlist option:selected").text()};
-            $.post("list-available-rooms", $.param(params), function(responseText) {
-                alert(responseText);
-            });
+            var param = {rooms : $("#roomDropDownList option:selected").text()};
+            $.post("list-available-rooms", $.param(param));
         });
     </script>
 
@@ -223,8 +221,8 @@ background-attachment: fixed">
 
                         <!-- Rooms -->
                         <div>
+                            <select id="roomDropDownList" multiple style="min-width: 200px"></select><br>
                             <button type="button" id="buttonLoadRooms">Load Rooms</button>
-                            <select id="dropdownlist"></select><br>
                             <button id="buttonSubmit">Add Room</button>
                         </div>
 
