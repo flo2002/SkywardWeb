@@ -1,7 +1,8 @@
 package fhv.ws22.se.skyward.webview;
 
-import fhv.ws22.se.skyward.domain.SessionService;
 import fhv.ws22.se.skyward.domain.dtos.RoomDto;
+import fhv.ws22.se.skyward.domain.service.DomainService;
+import fhv.ws22.se.skyward.domain.service.SessionService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,10 +21,10 @@ import com.google.gson.Gson;
 
 @WebServlet("/list-available-rooms")
 public class ListAvailableRoomsController extends HttpServlet {
-    private SessionService session;
+    private DomainService domainService;
 
     public void init() {
-        session = (SessionService) getServletContext().getAttribute("session");
+        domainService = (DomainService) getServletContext().getAttribute("domainService");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -32,7 +33,7 @@ public class ListAvailableRoomsController extends HttpServlet {
         LocalDateTime checkInDateTime = LocalDateTime.of(checkIn, LocalTime.of(12, 0));
         LocalDateTime checkOutDateTime = LocalDateTime.of(checkOut, LocalTime.of(12, 0));
 
-        List<RoomDto> availableRooms = session.getAvailableRooms(checkInDateTime, checkOutDateTime);
+        List<RoomDto> availableRooms = domainService.getAvailableRooms(checkInDateTime, checkOutDateTime);
         String json = new Gson().toJson(availableRooms);
 
         response.setContentType("application/json");
@@ -46,7 +47,7 @@ public class ListAvailableRoomsController extends HttpServlet {
         Matcher m = p.matcher(selectedRooms);
 
         List<RoomDto> selectedRoomList = new ArrayList<>();
-        List<RoomDto> rooms = session.getAll(RoomDto.class);
+        List<RoomDto> rooms = domainService.getAll(RoomDto.class);
 
         while (m.find()) {
             Integer roomNumber = Integer.parseInt(m.group());
@@ -56,7 +57,5 @@ public class ListAvailableRoomsController extends HttpServlet {
                 }
             }
         }
-
-        selectedRoomList.forEach(System.out::println);
     }
 }

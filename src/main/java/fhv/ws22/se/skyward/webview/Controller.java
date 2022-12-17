@@ -1,10 +1,10 @@
 package fhv.ws22.se.skyward.webview;
 
-import fhv.ws22.se.skyward.domain.SessionService;
 import fhv.ws22.se.skyward.domain.dtos.AddressDto;
 import fhv.ws22.se.skyward.domain.dtos.BookingDto;
 import fhv.ws22.se.skyward.domain.dtos.CustomerDto;
 import fhv.ws22.se.skyward.domain.dtos.RoomDto;
+import fhv.ws22.se.skyward.domain.service.DomainService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,10 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -26,19 +22,10 @@ import java.util.List;
 
 @WebServlet(urlPatterns = {"/controller"})
 public class Controller extends HttpServlet {
-
-    private SessionService session;
+    private DomainService domainService;
 
     public void init() {
-        session = (SessionService) getServletContext().getAttribute("session");
-
-        // Bind the SessionService to the RMI registry
-        try {
-            Registry registry = LocateRegistry.getRegistry();
-            registry.rebind("session", session);
-        } catch (RemoteException e) {
-            // Handle the error
-        }
+        domainService = (DomainService) getServletContext().getAttribute("domainService");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -88,9 +75,9 @@ public class Controller extends HttpServlet {
         booking.setRooms(rooms);
 
 
-        session.add(address);
-        session.add(customer);
-        session.add(booking);
+        domainService.add(address);
+        domainService.add(customer);
+        domainService.add(booking);
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
         dispatcher.forward(request,response);
