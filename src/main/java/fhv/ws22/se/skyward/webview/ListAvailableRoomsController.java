@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,14 +42,21 @@ public class ListAvailableRoomsController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String selectedRooms = request.getParameter("rooms");
-        System.out.println(selectedRooms);
-        Pattern p = Pattern.compile("/[0-9]+/");
+        Pattern p = Pattern.compile("[0-9]+");
         Matcher m = p.matcher(selectedRooms);
 
+        List<RoomDto> selectedRoomList = new ArrayList<>();
+        List<RoomDto> rooms = session.getAll(RoomDto.class);
+
         while (m.find()) {
-            String roomNumber = m.group();
-            System.out.println(roomNumber);
+            Integer roomNumber = Integer.parseInt(m.group());
+            for (RoomDto room : rooms) {
+                if (room.getRoomNumber().equals(roomNumber)) {
+                    selectedRoomList.add(room);
+                }
+            }
         }
 
+        selectedRoomList.forEach(System.out::println);
     }
 }
