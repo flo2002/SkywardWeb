@@ -95,8 +95,6 @@ public class Controller extends HttpServlet {
         domainService.add(address);
         domainService.add(customer);
         domainService.add(booking);
-        System.out.println(booking);
-
 
         String[] checkInPart = checkIn.split("-");
         String[] checkOutPart = checkOut.split("-");
