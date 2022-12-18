@@ -71,7 +71,7 @@ background-attachment: fixed">
                 <h3>Fill in this form to create a reservation.</h3>
                 <div class="container">
 
-                    <form id="form" action="./controller" onsubmit="return formValidation()" name="registration" method="get">
+                    <form id="form" action="./controller" onsubmit="return formValidation()" name="registration" method="post">
 
                         <table id="dates">
                             <tr>
