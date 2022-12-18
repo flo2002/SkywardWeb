@@ -1,9 +1,7 @@
 package fhv.ws22.se.skyward;
 
-import fhv.ws22.se.skyward.domain.service.DomainService;
-import fhv.ws22.se.skyward.domain.service.ServiceProviderService;
-import fhv.ws22.se.skyward.domain.service.SessionService;
-import fhv.ws22.se.skyward.domain.service.TmpDataService;
+import fhv.ws22.se.skyward.domain.service.*;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 
@@ -20,8 +18,10 @@ public class CustomServletContextListener implements ServletContextListener {
             System.exit(1);
         }
 
+        ServletContext context = sce.getServletContext();
         ServiceProviderService serviceProvider = session.getServiceProvider();
-        sce.getServletContext().setAttribute("domainService", serviceProvider.getService(DomainService.class));
-        sce.getServletContext().setAttribute("tmpDataService", serviceProvider.getService(TmpDataService.class));
+        context.setAttribute("domainService", serviceProvider.getService(DomainService.class));
+        context.setAttribute("tmpDataService", serviceProvider.getService(TmpDataService.class));
+        context.setAttribute("emailService", serviceProvider.getService(EmailService.class));
     }
 }

@@ -9,6 +9,7 @@ function formValidation() {
     var country = document.getElementById("country");
     var email = document.getElementById("email");
     var customerType = document.getElementById("customerType");
+    var roomDropDownList = document.getElementById("roomDropDownList");
 
     var namereg = new RegExp(/^[A-ZÄÖÜ][a-zäöüß]+$/);
     var streetreg = new RegExp(/^[a-zA-Zäöüß0-9]+(?:[\s-][a-zA-Zäöüß0-9]+)*$/);
@@ -17,6 +18,7 @@ function formValidation() {
     var cityreg = new RegExp(/^[a-zA-Zäöüß]+(?:[\s-][a-zA-Zäöüß]+)*$/);
     var countryreg = new RegExp(/^[a-zA-Zäöüß]+(?:[\s-][a-zA-Zäöüß]+)*$/);
     var emailreg = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+    var roomListReg = new RegExp("[0-9]+");
 
 
 
@@ -63,19 +65,33 @@ function formValidation() {
         return false;
     }
 
+    let typeValue = customerType.value;
+    if (!typeValue === "Individual" || !typeValue === "Travel Agency" || !typeValue === "Group") {
+        alert("Type is not valid");
+        customerType.focus();
+        return false;
+    }
+
+    if (!roomListReg.test($("#roomDropDownList option:selected").text())) {
+        alert("Please select a room!");
+        roomDropDownList.focus();
+        return false;
+    }
+
     if (!emailreg.test(email.value)) {
         alert("The email is not valid!");
         email.focus();
         return false;
     }
 
-    let typeValue = customerType.value;
-    if (typeValue === "Individual" || typeValue === "Travel Agency" || typeValue === "Group") {
-        alert("Type is not valid");
-        customerType.focus();
-        return false;
+    if (typeValue === "Individual") {
+        var temp = $("#roomDropDownList option:selected").text();
+        var count = (temp.match(/[0-9]+/g) || []).length;
+        if (count > 2) {
+            alert("Individual customer can only book 2 rooms!");
+            return false;
+        }
     }
-
 
     return true;
 }

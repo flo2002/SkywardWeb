@@ -5,6 +5,7 @@ import fhv.ws22.se.skyward.domain.dtos.BookingDto;
 import fhv.ws22.se.skyward.domain.dtos.CustomerDto;
 import fhv.ws22.se.skyward.domain.dtos.RoomDto;
 import fhv.ws22.se.skyward.domain.service.DomainService;
+import fhv.ws22.se.skyward.domain.service.EmailService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,13 +20,17 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @WebServlet(urlPatterns = {"/controller"})
 public class Controller extends HttpServlet {
     private DomainService domainService;
+    private EmailService emailService;
 
     public void init() {
         domainService = (DomainService) getServletContext().getAttribute("domainService");
+        emailService = (EmailService) getServletContext().getAttribute("emailService");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -33,7 +38,6 @@ public class Controller extends HttpServlet {
 
         String checkIn = request.getParameter("checkin");
         String checkOut = request.getParameter("checkout");
-        String room = request.getParameter("room-type");
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
         String street = request.getParameter("street");
@@ -43,6 +47,7 @@ public class Controller extends HttpServlet {
         String country = request.getParameter("country");
         String customerType = request.getParameter("customerType");
         String email = request.getParameter("email");
+        String rooms = request.getParameter("roomDropDownList");
 
 
         BookingDto booking = new BookingDto();
@@ -71,13 +76,44 @@ public class Controller extends HttpServlet {
         List<CustomerDto> customers = new ArrayList<CustomerDto>();
         customers.add(customer);
         booking.setCustomers(customers);
-        List<RoomDto> rooms = new ArrayList<RoomDto>();
-        booking.setRooms(rooms);
+
+        Pattern p = Pattern.compile("[0-9]+");
+        Matcher m = p.matcher(rooms);
+        List<RoomDto> selectedRoomList = new ArrayList<>();
+        List<RoomDto> allRooms = domainService.getAll(RoomDto.class);
+        while (m.find()) {
+            Integer roomNumber = Integer.parseInt(m.group());
+            for (RoomDto room : allRooms) {
+                if (room.getRoomNumber().equals(roomNumber)) {
+                    selectedRoomList.add(room);
+                }
+            }
+        }
+        booking.setRooms(selectedRoomList);
+
+        if (booking.getRooms().size() > 2) {
+            // return error page
+            
+        }
 
 
         domainService.add(address);
         domainService.add(customer);
         domainService.add(booking);
+
+        String[] checkInPart = checkIn.split("-");
+        String[] checkOutPart = checkOut.split("-");
+        String formatCheckIn = checkInPart[2] + "." + checkInPart[1] + "." + checkInPart[0];
+        String formatCheckOut = checkOutPart[2] + "." + checkOutPart[1] + "." + checkOutPart[0];
+        emailService.sendEmail(email, "Booking confirmation", "Dear " + firstname + " " + lastname + ",\n" +
+                "Thank you for your booking at Skyward Hotel.\n" +
+                "Your booking details:\n" +
+                "Check-in: " + formatCheckIn + "\n" +
+                "Check-out: " + formatCheckOut + "\n" +
+                "Room: " + rooms + "\n" +
+                "We are looking forward to welcoming you at Skyward Hotel.\n" +
+                "Best regards,\n" +
+                "Skyward Hotel\n\n");
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
         dispatcher.forward(request,response);
