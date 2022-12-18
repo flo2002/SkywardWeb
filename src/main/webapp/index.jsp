@@ -14,7 +14,7 @@
 <nav>
     <div class="menu">
         <div class="logo">
-            <a href="#">Skyward</a>
+            <a href="index.jsp">Skyward</a>
         </div>
         <ul>
             <li class="navbar"><a class="active" href="index.jsp">Home</a></li>
