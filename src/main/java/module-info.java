@@ -9,6 +9,5 @@ module fhv.ws22.se.skyward {
     opens fhv.ws22.se.skyward;
 
     exports fhv.ws22.se.skyward.domain.dtos;
-    exports fhv.ws22.se.skyward.domain;
     opens fhv.ws22.se.skyward.domain.service;
 }
