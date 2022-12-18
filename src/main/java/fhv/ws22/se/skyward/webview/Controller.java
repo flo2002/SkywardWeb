@@ -91,6 +91,11 @@ public class Controller extends HttpServlet {
         }
         booking.setRooms(selectedRoomList);
 
+        if (booking.getRooms().size() > 2) {
+            // return error page
+            
+        }
+
 
         domainService.add(address);
         domainService.add(customer);
