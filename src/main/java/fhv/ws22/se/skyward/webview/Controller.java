@@ -89,14 +89,19 @@ public class Controller extends HttpServlet {
                 }
             }
         }
+        booking.setRooms(selectedRoomList);
+
+
+        domainService.add(address);
+        domainService.add(customer);
+        domainService.add(booking);
+        System.out.println(booking);
 
 
         String[] checkInPart = checkIn.split("-");
         String[] checkOutPart = checkOut.split("-");
-
         String formatCheckIn = checkInPart[2] + "." + checkInPart[1] + "." + checkInPart[0];
         String formatCheckOut = checkOutPart[2] + "." + checkOutPart[1] + "." + checkOutPart[0];
-
         emailService.sendEmail(email, "Booking confirmation", "Dear " + firstname + " " + lastname + ",\n" +
                 "Thank you for your booking at Skyward Hotel.\n" +
                 "Your booking details:\n" +
@@ -106,10 +111,6 @@ public class Controller extends HttpServlet {
                 "We are looking forward to welcoming you at Skyward Hotel.\n" +
                 "Best regards,\n" +
                 "Skyward Hotel\n\n");
-
-        domainService.add(address);
-        domainService.add(customer);
-        domainService.add(booking);
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
         dispatcher.forward(request,response);
