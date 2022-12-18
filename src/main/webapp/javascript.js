@@ -8,6 +8,7 @@ function formValidation() {
     var city = document.getElementById("city");
     var country = document.getElementById("country");
     var email = document.getElementById("email");
+    var customerType = document.getElementById("customerType");
 
     var namereg = new RegExp(/^[A-ZÄÖÜ][a-zäöüß]+$/);
     var streetreg = new RegExp(/^[a-zA-Zäöüß0-9]+(?:[\s-][a-zA-Zäöüß0-9]+)*$/);
@@ -16,6 +17,7 @@ function formValidation() {
     var cityreg = new RegExp(/^[a-zA-Zäöüß]+(?:[\s-][a-zA-Zäöüß]+)*$/);
     var countryreg = new RegExp(/^[a-zA-Zäöüß]+(?:[\s-][a-zA-Zäöüß]+)*$/);
     var emailreg = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+
 
 
     if (!namereg.test(firstname.value)) {
@@ -66,6 +68,14 @@ function formValidation() {
         email.focus();
         return false;
     }
+
+    let typeValue = customerType.value;
+    if (typeValue === "Individual" || typeValue === "Travel Agency" || typeValue === "Group") {
+        alert("Type is not valid");
+        customerType.focus();
+        return false;
+    }
+
 
     return true;
 }

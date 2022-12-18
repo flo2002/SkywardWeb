@@ -1,15 +1,30 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="web.css">
-    <script src="javascript.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="javascript.js"></script>
+    <script>
+        $(document).on("click", "#buttonLoadRooms", function() {
+            $.get("list-available-rooms?checkin=" + document.getElementById("check-in-date").value + "&checkout=" + document.getElementById("check-out-date").value, function(responseJson) {
+                var $select = $("#roomDropDownList");
+                $select.find("option").remove();
+                $.each(responseJson, function(index, room) {
+                    $("<option>").val(room.roomNumber).text(room.roomNumber + " " + room.roomTypeName).appendTo($select);
+                });
+            });
+        });
+        $(document).on("click", "#buttonSubmit", function() {
+            var param = {rooms : $("#roomDropDownList option:selected").text()};
+            $.post("list-available-rooms", $.param(param));
+        });
+    </script>
 
     <script>
         $(function(){
@@ -40,7 +55,7 @@ background-attachment: fixed">
 <nav>
     <div class="menu">
         <div class="logo">
-            <a href="#">Skyward</a>
+            <a href="index.jsp">Skyward</a>
         </div>
         <ul>
             <li class="navbar"><a href="index.jsp">Home</a></li>
@@ -49,10 +64,10 @@ background-attachment: fixed">
     </div>
 </nav>
 
-    <div style="float: left">
+    <div style="display: flex;justify-content: center">
         <div class="whitebackground">
 
-            <!-- Ãœberschrift -->
+            <!-- Überschrift -->
             <div class="centerContent">
                 <h1>Make a Reservation</h1>
                 <h3>Fill in this form to create a reservation.</h3>
@@ -107,7 +122,7 @@ background-attachment: fixed">
                         <!-- Adresse -->
                         <table id="adress1">
                             <tr>
-                                <!-- StraÃŸe -->
+                                <!-- Straße -->
                                 <td>
                                     <div class="input-control">
                                         <label for="street" class="bold">Street<br/></label>
@@ -118,7 +133,7 @@ background-attachment: fixed">
                                 <!-- HNr. -->
                                 <td>
                                     <div class="input-control">
-                                        <label for="housenumber" class="bold" style="margin-left: 50px">HNr.
+                                        <label for="housenumber" class="bold" style="margin-left: 50px">House
                                             <br/></label>
                                         <input class="sizesmall" name="housenumber" id="housenumber" type="text" required>
                                         <div class="error" style="margin-left: 50px"></div>
@@ -150,46 +165,65 @@ background-attachment: fixed">
                         </table>
 
                         <!-- Land -->
-                        <!-- NationalitÃ¤t -->
+                        <!-- Nationalität -->
                         <div class="input-control">
                             <label for="country" class="bold">Nationality <br/></label>
                             <select name="country" id="country" class="sizebig">
                                 <option value="" selected>--Please select--</option>
-                                <option value="select">Africa</option>
-                                <option value="select">Asia</option>
-                                <option value="select">Australia</option>
-                                <option value="select">Austria</option>
-                                <option value="select">Belgium</option>
-                                <option value="select">Bulgaria</option>
-                                <option value="select">Central America</option>
-                                <option value="select">Croatia</option>
-                                <option value="select">Cyprus</option>
-                                <option value="select">Czech Republic</option>
-                                <option value="select">Denmark</option>
-                                <option value="select">Estonia</option>
-                                <option value="select">Finnland</option>
-                                <option value="select">France</option>
-                                <option value="select">Germany</option>
-                                <option value="select">Greece</option>
-                                <option value="select">Hungary</option>
-                                <option value="select">Ireland</option>
-                                <option value="select">Italy</option>
-                                <option value="select">Latvia</option>
-                                <option value="select">Liechtenstein</option>
-                                <option value="select">Luxembourg</option>
-                                <option value="select">Malta</option>
-                                <option value="select">Netherlands</option>
-                                <option value="select">North America</option>
-                                <option value="select">Poland</option>
-                                <option value="select">Portugal</option>
-                                <option value="select">Romania</option>
-                                <option value="select">Slovakia</option>
-                                <option value="select">South America</option>
-                                <option value="select">Spain</option>
-                                <option value="select">Sweden</option>
-                                <option value="select">Switzerland</option>
+                                <option value="Africa">Africa</option>
+                                <option value="Asia">Asia</option>
+                                <option value="Australia">Australia</option>
+                                <option value="Austria">Austria</option>
+                                <option value="Belgium">Belgium</option>
+                                <option value="Bulgaria">Bulgaria</option>
+                                <option value="Central America">Central America</option>
+                                <option value="Croatia">Croatia</option>
+                                <option value="Cyprus">Cyprus</option>
+                                <option value="Czech Republic">Czech Republic</option>
+                                <option value="Denmark">Denmark</option>
+                                <option value="Estonia">Estonia</option>
+                                <option value="Finnland">Finnland</option>
+                                <option value="France">France</option>
+                                <option value="Germany">Germany</option>
+                                <option value="Greece">Greece</option>
+                                <option value="Hungary">Hungary</option>
+                                <option value="Ireland">Ireland</option>
+                                <option value="Italy">Italy</option>
+                                <option value="Latvia">Latvia</option>
+                                <option value="Liechtenstein">Liechtenstein</option>
+                                <option value="Luxembourg">Luxembourg</option>
+                                <option value="Malta">Malta</option>
+                                <option value="Netherlands">Netherlands</option>
+                                <option value="North America">North America</option>
+                                <option value="Poland">Poland</option>
+                                <option value="Portugal">Portugal</option>
+                                <option value="Romania">Romania</option>
+                                <option value="Slovakia">Slovakia</option>
+                                <option value="South America">South America</option>
+                                <option value="Spain">Spain</option>
+                                <option value="Sweden">Sweden</option>
+                                <option value="Switzerland">Switzerland</option>
                             </select>
                             <div class="error"></div>
+                        </div>
+
+                        <!-- Customer Type -->
+                        <div class="input-control">
+                            <label for="customerType" class="bold">Type <br/></label>
+                            <select name="customerType" id="customerType" class="sizebig">
+
+                                <option value="select" selected>Individual</option>
+                                <option value="select">Travel Agency</option>
+                                <option value="select">Group</option>
+                            </select>
+                            <div class="error"></div>
+                        </div>
+
+                        <!-- Rooms -->
+                        <div>
+                            <select id="roomDropDownList" multiple style="min-width: 200px"></select><br>
+                            <button type="button" id="buttonLoadRooms">Load Rooms</button>
+                            <button id="buttonSubmit">Add Room</button>
                         </div>
 
                         <!-- Email -->
@@ -201,7 +235,7 @@ background-attachment: fixed">
 
                         <div style="margin-top: 30px">
                             <button type="reset" class="reset">Reset</button>
-                            <button type="submit" action="./controller" class="send">Send</button>
+                            <button type="submit" id="submit" action="./controller" class="send">Complete Reservation</button>
                         </div>
                     </form>
                 </div>

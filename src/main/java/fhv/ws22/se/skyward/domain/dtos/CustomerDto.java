@@ -8,13 +8,14 @@ public class CustomerDto extends AbstractDto {
     private String firstName;
     private String lastName;
     private AddressDto address;
-
+    private String customerType;
     public CustomerDto() {
     }
-    public CustomerDto(String firstName, String lastName, AddressDto address) {
+    public CustomerDto(String firstName, String lastName, AddressDto address, String customerType) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
+        this.customerType = customerType;
     }
 
     public String getFirstName() {
@@ -38,12 +39,19 @@ public class CustomerDto extends AbstractDto {
         this.address = address;
     }
 
+    public String getCustomerType() {
+        return customerType;
+    }
+    public void setCustomerType(String type) {
+        this.customerType = type;
+    }
     @Override
     public String toString() {
         return "CustomerDto{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", address=" + address +
+                ", type=" + customerType +
                 '}';
     }
 }
