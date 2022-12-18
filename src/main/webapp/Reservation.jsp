@@ -20,13 +20,7 @@
                 });
             });
         });
-        /*$(document).on("click", "#buttonSubmit", function() {
-            var param = {rooms : $("#roomDropDownList option:selected").text()};
-            $.post("list-available-rooms", $.param(param));
-        });*/
-    </script>
 
-    <script>
         $(function(){
             var dtToday = new Date();
 
@@ -73,7 +67,7 @@ background-attachment: fixed">
                 <h3>Fill in this form to create a reservation.</h3>
                 <div class="container">
 
-                    <form id="form" action="./controller" onsubmit="return formValidation()" name="registration" method="GET">
+                    <form id="form" action="./controller" onsubmit="return formValidation()" name="registration" method="get">
 
                         <table id="dates">
                             <tr>
@@ -211,9 +205,8 @@ background-attachment: fixed">
                         <div class="input-control">
                             <label for="customerType" class="bold">Type <br/></label>
                             <select name="customerType" id="customerType" class="sizebig">
-
                                 <option value="Individual" selected>Individual</option>
-                                <option value="Travel Agency">Travel Agency</option>
+                                <option value="TravelAgency">Travel Agency</option>
                                 <option value="Group">Group</option>
                             </select>
                             <div class="error"></div>
@@ -221,10 +214,11 @@ background-attachment: fixed">
 
                         <!-- Rooms -->
                         <div class="input-control">
-                            <select id="roomDropDownList" multiple style="min-width: 200px">
-                                <option value="SelectRoom" selected>Select Room</option>
+                            <select id="roomDropDownList" name="roomDropDownList" multiple style="min-width: 200px">
+                                <option value="Select Room" selected>Select Room</option>
                             </select><br>
                             <button type="button" id="buttonLoadRooms">Load Rooms</button>
+                            <div class="error"></div>
                         </div>
 
                         <!-- Email -->
@@ -236,7 +230,7 @@ background-attachment: fixed">
 
                         <div style="margin-top: 30px">
                             <button type="reset" class="reset">Reset</button>
-                            <button type="submit" id="submit" action="./controller" class="send">Complete Reservation</button>
+                            <button type="submit" id="submit" class="send">Complete Reservation</button>
                         </div>
                     </form>
                 </div>

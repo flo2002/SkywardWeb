@@ -18,6 +18,7 @@ function formValidation() {
     var cityreg = new RegExp(/^[a-zA-Zäöüß]+(?:[\s-][a-zA-Zäöüß]+)*$/);
     var countryreg = new RegExp(/^[a-zA-Zäöüß]+(?:[\s-][a-zA-Zäöüß]+)*$/);
     var emailreg = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+    var roomListReg = new RegExp("[0-9]+");
 
 
 
@@ -64,22 +65,22 @@ function formValidation() {
         return false;
     }
 
-    if (!emailreg.test(email.value)) {
-        alert("The email is not valid!");
-        email.focus();
-        return false;
-    }
-
     let typeValue = customerType.value;
-    if (typeValue === "Individual" || typeValue === "Travel Agency" || typeValue === "Group") {
+    if (!typeValue === "Individual" || !typeValue === "Travel Agency" || !typeValue === "Group") {
         alert("Type is not valid");
         customerType.focus();
         return false;
     }
 
-    if (roomDropDownList.value === "SelectRoom") {
+    if (!roomListReg.test($("#roomDropDownList option:selected").text())) {
         alert("Please select a room!");
         roomDropDownList.focus();
+        return false;
+    }
+
+    if (!emailreg.test(email.value)) {
+        alert("The email is not valid!");
+        email.focus();
         return false;
     }
 
