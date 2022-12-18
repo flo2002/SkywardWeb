@@ -40,8 +40,4 @@ public class ListAvailableRoomsController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);
     }
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-        String selectedRooms = request.getParameter("rooms");
-    }
 }
