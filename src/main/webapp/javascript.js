@@ -9,6 +9,7 @@ function formValidation() {
     var country = document.getElementById("country");
     var email = document.getElementById("email");
     var customerType = document.getElementById("customerType");
+    var roomDropDownList = document.getElementById("roomDropDownList");
 
     var namereg = new RegExp(/^[A-ZÄÖÜ][a-zäöüß]+$/);
     var streetreg = new RegExp(/^[a-zA-Zäöüß0-9]+(?:[\s-][a-zA-Zäöüß0-9]+)*$/);
@@ -76,6 +77,11 @@ function formValidation() {
         return false;
     }
 
+    if (roomDropDownList.value === "SelectRoom") {
+        alert("Please select a room!");
+        roomDropDownList.focus();
+        return false;
+    }
 
     return true;
 }

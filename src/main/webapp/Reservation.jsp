@@ -20,10 +20,10 @@
                 });
             });
         });
-        $(document).on("click", "#buttonSubmit", function() {
+        /*$(document).on("click", "#buttonSubmit", function() {
             var param = {rooms : $("#roomDropDownList option:selected").text()};
             $.post("list-available-rooms", $.param(param));
-        });
+        });*/
     </script>
 
     <script>
@@ -220,10 +220,11 @@ background-attachment: fixed">
                         </div>
 
                         <!-- Rooms -->
-                        <div>
-                            <select id="roomDropDownList" multiple style="min-width: 200px"></select><br>
+                        <div class="input-control">
+                            <select id="roomDropDownList" multiple style="min-width: 200px">
+                                <option value="SelectRoom" selected>Select Room</option>
+                            </select><br>
                             <button type="button" id="buttonLoadRooms">Load Rooms</button>
-                            <button id="buttonSubmit">Add Room</button>
                         </div>
 
                         <!-- Email -->

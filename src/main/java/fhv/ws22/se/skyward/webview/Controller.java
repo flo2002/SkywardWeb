@@ -33,7 +33,6 @@ public class Controller extends HttpServlet {
 
         String checkIn = request.getParameter("checkin");
         String checkOut = request.getParameter("checkout");
-        String room = request.getParameter("room-type");
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
         String street = request.getParameter("street");
@@ -43,6 +42,7 @@ public class Controller extends HttpServlet {
         String country = request.getParameter("country");
         String customerType = request.getParameter("customerType");
         String email = request.getParameter("email");
+        String rooms = request.getParameter("roomDropDownList");
 
 
         BookingDto booking = new BookingDto();
@@ -71,8 +71,10 @@ public class Controller extends HttpServlet {
         List<CustomerDto> customers = new ArrayList<CustomerDto>();
         customers.add(customer);
         booking.setCustomers(customers);
-        List<RoomDto> rooms = new ArrayList<RoomDto>();
-        booking.setRooms(rooms);
+
+        //List<RoomDto> rooms = new ArrayList<RoomDto>();
+        //booking.setRooms(rooms);
+        System.out.println(rooms);
 
 
         domainService.add(address);
