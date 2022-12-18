@@ -212,9 +212,9 @@ background-attachment: fixed">
                             <label for="customerType" class="bold">Type <br/></label>
                             <select name="customerType" id="customerType" class="sizebig">
 
-                                <option value="select" selected>Individual</option>
-                                <option value="select">Travel Agency</option>
-                                <option value="select">Group</option>
+                                <option value="Individual" selected>Individual</option>
+                                <option value="Travel Agency">Travel Agency</option>
+                                <option value="Group">Group</option>
                             </select>
                             <div class="error"></div>
                         </div>
