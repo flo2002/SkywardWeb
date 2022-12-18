@@ -43,19 +43,5 @@ public class ListAvailableRoomsController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String selectedRooms = request.getParameter("rooms");
-        Pattern p = Pattern.compile("[0-9]+");
-        Matcher m = p.matcher(selectedRooms);
-
-        List<RoomDto> selectedRoomList = new ArrayList<>();
-        List<RoomDto> rooms = domainService.getAll(RoomDto.class);
-
-        while (m.find()) {
-            Integer roomNumber = Integer.parseInt(m.group());
-            for (RoomDto room : rooms) {
-                if (room.getRoomNumber().equals(roomNumber)) {
-                    selectedRoomList.add(room);
-                }
-            }
-        }
     }
 }
