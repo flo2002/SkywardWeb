@@ -11,7 +11,7 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="javascript.js"></script>
     <script>
-        $(document).on("click", "#buttonLoadRooms", function() {
+        function updateData() {
             if (document.getElementById("check-in-date").value !== "" && document.getElementById("check-out-date").value !== "" ) {
                 $.get("list-available-rooms?checkin=" + document.getElementById("check-in-date").value + "&checkout=" + document.getElementById("check-out-date").value, function (responseJson) {
                     var $select = $("#roomDropDownList");
@@ -20,10 +20,32 @@
                         $("<option>").val(room.roomNumber).text(room.roomNumber + " " + room.roomTypeName).appendTo($select);
                     });
                 });
-            } else {
-                alert("Please select your checkin and checkout date before loading the rooms");
             }
-        });
+        }
+
+        function sendData() {
+            if (formValidation()) {
+                $("form").submit(function (event) {
+                    var formData = {
+                        name: $("#name").val(),
+                        email: $("#email").val(),
+                        superheroAlias: $("#superheroAlias").val(),
+                    };
+
+                    $.ajax({
+                        type: "POST",
+                        url: "controller",
+                        data: formData,
+                        dataType: "json",
+                        encode: true,
+                    }).done(function (data) {
+                        console.log(data);
+                    });
+
+                    event.preventDefault();
+                });
+            }
+        }
 
         $(function(){
             var dtToday = new Date();
@@ -71,14 +93,13 @@ background-attachment: fixed">
                 <h3>Fill in this form to create a reservation.</h3>
                 <div class="container">
 
-                    <form id="form" action="./controller" onsubmit="return formValidation()" name="registration" method="post">
-
+                    <form id="form" onsubmit="sendData()" name="registration" method="post">
                         <table id="dates">
                             <tr>
                                 <td>
                                     <div class="input-control">
                                         <label for="check-in-date" class="bold">Checkin:<br/></label>
-                                        <input type="date" id="check-in-date" name="checkin" required>
+                                        <input type="date" id="check-in-date" name="checkin" onchange="updateData()" required>
                                         <div class="error"></div>
                                     </div>
                                 </td>
@@ -87,7 +108,7 @@ background-attachment: fixed">
                                 <td>
                                     <div class="input-control">
                                         <label for="check-out-date" style="margin-left: 50px" class="bold">Checkout:<br/></label>
-                                        <input type="date" id="check-out-date" name="checkout" required >
+                                        <input type="date" id="check-out-date" name="checkout" onchange="updateData()" required >
                                         <div class="error"></div>
                                     </div>
                                 </td>
