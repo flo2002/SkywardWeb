@@ -1,5 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,9 +16,15 @@
                 $.get("list-available-rooms?checkin=" + document.getElementById("check-in-date").value + "&checkout=" + document.getElementById("check-out-date").value, function (responseJson) {
                     var $select = $("#roomDropDownList");
                     $select.find("option").remove();
+                    var totalPrice = 0;
                     $.each(responseJson, function (index, room) {
                         $("<option>").val(room.roomNumber).text(room.roomNumber + " " + room.roomTypeName).appendTo($select);
+                        console.log(room.roomStateName)
+                        totalPrice += parseInt(room.roomStateName);
                     });
+                    var nights = (new Date(document.getElementById("check-out-date").value) - new Date(document.getElementById("check-in-date").value)) / (1000 * 3600 * 24);
+                    totalPrice *= nights;
+                    document.getElementById("totalPrice").innerText = "Total: " + totalPrice + " â‚¬";
                 });
             }
         }
@@ -63,7 +69,7 @@ background-attachment: fixed">
     <div style="display: flex;justify-content: center">
         <div class="whitebackground">
 
-            <!-- Überschrift -->
+            <!-- Ãœberschrift -->
             <div class="centerContent">
                 <h1>Make a Reservation</h1>
                 <h3>Fill in this form to create a reservation.</h3>
@@ -118,7 +124,7 @@ background-attachment: fixed">
                         <!-- Adresse -->
                         <table id="adress1">
                             <tr>
-                                <!-- Straße -->
+                                <!-- StraÃŸe -->
                                 <td>
                                     <div class="input-control">
                                         <label for="street" class="bold">Street<br/></label>
@@ -161,7 +167,7 @@ background-attachment: fixed">
                         </table>
 
                         <!-- Land -->
-                        <!-- Nationalität -->
+                        <!-- NationalitÃ¤t -->
                         <div class="input-control">
                             <label for="country" class="bold">Nationality <br/></label>
                             <select name="country" id="country" class="sizebig">
@@ -218,7 +224,8 @@ background-attachment: fixed">
                         <div class="input-control">
                             <select id="roomDropDownList" name="roomDropDownList" multiple style="min-width: 200px">
                                 <option value="Select Room" selected>Select Room</option>
-                            </select><br>
+                            </select><br/>
+                            <p id="totalPrice"></p>
                             <div class="error"></div>
                         </div>
 
