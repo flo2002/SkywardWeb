@@ -11,21 +11,39 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="javascript.js"></script>
     <script>
+        var lastResponseJson;
+
         function updateData() {
             if (document.getElementById("check-in-date").value !== "" && document.getElementById("check-out-date").value !== "" ) {
                 $.get("list-available-rooms?checkin=" + document.getElementById("check-in-date").value + "&checkout=" + document.getElementById("check-out-date").value, function (responseJson) {
                     var $select = $("#roomDropDownList");
                     $select.find("option").remove();
-                    var totalPrice = 0;
+                    lastResponseJson = responseJson;
                     $.each(responseJson, function (index, room) {
                         $("<option>").val(room.roomNumber).text(room.roomNumber + " " + room.roomTypeName).appendTo($select);
-                        totalPrice += parseInt(room.roomStateName);
                     });
-                    var nights = (new Date(document.getElementById("check-out-date").value) - new Date(document.getElementById("check-in-date").value)) / (1000 * 3600 * 24);
-                    totalPrice *= nights;
-                    document.getElementById("totalPrice").innerText = "Total: " + totalPrice + " €";
                 });
             }
+        }
+
+        function recalculateTotalPrice() {
+            var nights = (new Date(document.getElementById("check-out-date").value) - new Date(document.getElementById("check-in-date").value)) / (1000 * 3600 * 24);
+            var totalPrice = 0;
+
+            var options = $("#roomDropDownList option:selected");
+            var values = $.map(options, function (option) {
+                return option.value;
+            });
+
+            $.each(lastResponseJson, function (index, room) {
+                for (var i = 0; i < values.length; i++) {
+                    if (parseInt(room.roomNumber) == values[i]) {
+                        totalPrice += parseInt(room.roomStateName) * nights;
+                    }
+                }
+            });
+            totalPrice *= nights;
+            document.getElementById("totalPrice").innerText = "Total: " + totalPrice + " €";
         }
 
         $(function(){
@@ -221,10 +239,10 @@ background-attachment: fixed">
 
                         <!-- Rooms -->
                         <div class="input-control">
-                            <select id="roomDropDownList" name="roomDropDownList" multiple style="min-width: 200px">
+                            <select id="roomDropDownList" name="roomDropDownList" onchange="recalculateTotalPrice()" multiple style="min-width: 200px">
                                 <option value="Select Room" selected>Select Room</option>
                             </select><br/>
-                            <p id="totalPrice"></p>
+                            <p id="totalPrice">Total: - €</p>
                             <div class="error"></div>
                         </div>
 
