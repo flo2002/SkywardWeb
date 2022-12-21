@@ -39,7 +39,7 @@ public class ListAvailableRoomsController extends HttpServlet {
         List<RoomDto> availableRooms = domainService.getAvailableRooms(checkInDateTime, checkOutDateTime);
         // add room prices to the roomType
         for (RoomDto room : availableRooms) {
-            room.setRoomTypeName(room.getRoomTypeName() + " - " + tmpDataService.getPrice(room.getRoomTypeName()) + "€/night");
+            room.setRoomTypeName(room.getRoomTypeName() + " - " /*+ tmpDataService.getPrice(room.getRoomTypeName())*/ + "€/night");
         }
         String json = new Gson().toJson(availableRooms);
 
