@@ -37,12 +37,11 @@
 
             $.each(lastResponseJson, function (index, room) {
                 for (var i = 0; i < values.length; i++) {
-                    if (parseInt(room.roomNumber) == values[i]) {
+                    if (parseInt(room.roomNumber) === parseInt(values[i])) {
                         totalPrice += parseInt(room.roomStateName) * nights;
                     }
                 }
             });
-            totalPrice *= nights;
             document.getElementById("totalPrice").innerText = "Total: " + totalPrice + " €";
         }
 
