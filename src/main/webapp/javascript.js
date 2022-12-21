@@ -87,7 +87,7 @@ function formValidation() {
     if (typeValue === "Individual") {
         var temp = $("#roomDropDownList option:selected").text();
         var count = (temp.match(/[0-9]+/g) || []).length;
-        if (count > 4) {
+        if (count > 2) {
             alert("Individual customer can only book 2 rooms!");
             return false;
         }

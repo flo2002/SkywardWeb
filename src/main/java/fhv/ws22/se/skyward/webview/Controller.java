@@ -90,7 +90,6 @@ public class Controller extends HttpServlet {
                 }
             }
             booking.setRooms(selectedRoomList);
-            booking.getRooms().forEach(System.out::println);
 
             if (booking.getRooms().size() > 2) {
                 request.getSession().setAttribute("error", "You can only book 2 rooms at a time");
