@@ -19,7 +19,6 @@
                     var totalPrice = 0;
                     $.each(responseJson, function (index, room) {
                         $("<option>").val(room.roomNumber).text(room.roomNumber + " " + room.roomTypeName).appendTo($select);
-                        console.log(room.roomStateName)
                         totalPrice += parseInt(room.roomStateName);
                     });
                     var nights = (new Date(document.getElementById("check-out-date").value) - new Date(document.getElementById("check-in-date").value)) / (1000 * 3600 * 24);
