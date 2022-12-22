@@ -27,7 +27,8 @@
 <div class="img">
     <div class="center">
 
-        <div class="title">Your Account has been created!</div>
+        <div class="title">Your Reservation has been created!</div>
+        <div class="smaller">To complete the Reservation a down-payment of 15% is required.</div>
         <div class="smaller">Your CheckIn Date is: ${sessionScope.success.checkInDateTime}</div>
         <div class="smaller">Your CheckOut Date is: ${sessionScope.success.checkOutDateTime}</div>
         <div class="smaller">Your Name is: ${sessionScope.success.customers[0].firstName} ${sessionScope.success.customers[0].lastName}</div>
