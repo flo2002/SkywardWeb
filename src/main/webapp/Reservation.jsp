@@ -1,5 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,19 +11,39 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="javascript.js"></script>
     <script>
-        $(document).on("click", "#buttonLoadRooms", function() {
+        var lastResponseJson;
+
+        function updateData() {
             if (document.getElementById("check-in-date").value !== "" && document.getElementById("check-out-date").value !== "" ) {
                 $.get("list-available-rooms?checkin=" + document.getElementById("check-in-date").value + "&checkout=" + document.getElementById("check-out-date").value, function (responseJson) {
                     var $select = $("#roomDropDownList");
                     $select.find("option").remove();
+                    lastResponseJson = responseJson;
                     $.each(responseJson, function (index, room) {
                         $("<option>").val(room.roomNumber).text(room.roomNumber + " " + room.roomTypeName).appendTo($select);
                     });
                 });
-            } else {
-                alert("Please select your checkin and checkout date before loading the rooms");
             }
-        });
+        }
+
+        function recalculateTotalPrice() {
+            var nights = (new Date(document.getElementById("check-out-date").value) - new Date(document.getElementById("check-in-date").value)) / (1000 * 3600 * 24);
+            var totalPrice = 0;
+
+            var options = $("#roomDropDownList option:selected");
+            var values = $.map(options, function (option) {
+                return option.value;
+            });
+
+            $.each(lastResponseJson, function (index, room) {
+                for (var i = 0; i < values.length; i++) {
+                    if (parseInt(room.roomNumber) === parseInt(values[i])) {
+                        totalPrice += parseInt(room.roomStateName) * nights;
+                    }
+                }
+            });
+            document.getElementById("totalPrice").innerText = "Total: " + totalPrice + " â‚¬";
+        }
 
         $(function(){
             var dtToday = new Date();
@@ -65,7 +85,7 @@ background-attachment: fixed">
     <div style="display: flex;justify-content: center">
         <div class="whitebackground">
 
-            <!-- Überschrift -->
+            <!-- Ãœberschrift -->
             <div class="centerContent">
                 <h1>Make a Reservation</h1>
                 <h3>Fill in this form to create a reservation.</h3>
@@ -78,7 +98,7 @@ background-attachment: fixed">
                                 <td>
                                     <div class="input-control">
                                         <label for="check-in-date" class="bold">Checkin:<br/></label>
-                                        <input type="date" id="check-in-date" name="checkin" required>
+                                        <input type="date" id="check-in-date" name="checkin" onchange="updateData()" required>
                                         <div class="error"></div>
                                     </div>
                                 </td>
@@ -87,7 +107,7 @@ background-attachment: fixed">
                                 <td>
                                     <div class="input-control">
                                         <label for="check-out-date" style="margin-left: 50px" class="bold">Checkout:<br/></label>
-                                        <input type="date" id="check-out-date" name="checkout" required >
+                                        <input type="date" id="check-out-date" name="checkout" onchange="updateData()" required >
                                         <div class="error"></div>
                                     </div>
                                 </td>
@@ -120,7 +140,7 @@ background-attachment: fixed">
                         <!-- Adresse -->
                         <table id="adress1">
                             <tr>
-                                <!-- Straße -->
+                                <!-- StraÃŸe -->
                                 <td>
                                     <div class="input-control">
                                         <label for="street" class="bold">Street<br/></label>
@@ -163,7 +183,7 @@ background-attachment: fixed">
                         </table>
 
                         <!-- Land -->
-                        <!-- Nationalität -->
+                        <!-- NationalitÃ¤t -->
                         <div class="input-control">
                             <label for="country" class="bold">Nationality <br/></label>
                             <select name="country" id="country" class="sizebig">
@@ -218,10 +238,10 @@ background-attachment: fixed">
 
                         <!-- Rooms -->
                         <div class="input-control">
-                            <select id="roomDropDownList" name="roomDropDownList" multiple style="min-width: 200px">
+                            <select id="roomDropDownList" name="roomDropDownList" onchange="recalculateTotalPrice()" multiple style="min-width: 200px">
                                 <option value="Select Room" selected>Select Room</option>
-                            </select><br>
-                            <button type="button" id="buttonLoadRooms">Load Rooms</button>
+                            </select><br/>
+                            <p id="totalPrice">Total: - â‚¬</p>
                             <div class="error"></div>
                         </div>
 

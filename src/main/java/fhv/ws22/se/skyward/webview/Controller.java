@@ -47,7 +47,9 @@ public class Controller extends HttpServlet {
             String country = request.getParameter("country");
             String customerType = request.getParameter("customerType");
             String email = request.getParameter("email");
-            String rooms = request.getParameter("roomDropDownList");
+            String[] roomArray = request.getParameterValues("roomDropDownList");
+            String rooms = String.join(",", roomArray);
+
 
 
             BookingDto booking = new BookingDto();

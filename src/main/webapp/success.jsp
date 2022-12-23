@@ -1,4 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,12 +27,16 @@
 <div class="img">
     <div class="center">
 
-        <div class="title">Your Account has been created!</div>
+        <div class="title">Your Reservation has been created!</div>
+        <div class="smaller">To complete the Reservation a down-payment of 15% is required.</div>
         <div class="smaller">Your CheckIn Date is: ${sessionScope.success.checkInDateTime}</div>
         <div class="smaller">Your CheckOut Date is: ${sessionScope.success.checkOutDateTime}</div>
         <div class="smaller">Your Name is: ${sessionScope.success.customers[0].firstName} ${sessionScope.success.customers[0].lastName}</div>
-        <div class="smaller">Your Room is: ${sessionScope.success.rooms[0].roomTypeName} ${sessionScope.success.rooms[0].roomNumber}</div>
-
+        <div class="smaller">Your Rooms are:
+            <c:forEach items="${sessionScope.success.rooms}" var="room">
+                <p>${room.roomTypeName} ${room.roomNumber}</p>
+            </c:forEach>
+        </div>
 
     </div>
 </div>
