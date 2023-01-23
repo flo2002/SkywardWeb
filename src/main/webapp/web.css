@@ -233,6 +233,12 @@ nav .menu{
     font-size: 52px;
     font-weight: 600;
 }
+
+.smaller {
+    font-size: 32px;
+    color: #fff;
+    font-weight: 600;
+}
 .center .btns{
     margin-top: 20px;
 }

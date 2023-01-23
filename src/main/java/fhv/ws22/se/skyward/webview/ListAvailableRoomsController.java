@@ -3,6 +3,7 @@ package fhv.ws22.se.skyward.webview;
 import fhv.ws22.se.skyward.domain.dtos.RoomDto;
 import fhv.ws22.se.skyward.domain.service.DomainService;
 import fhv.ws22.se.skyward.domain.service.SessionService;
+import fhv.ws22.se.skyward.domain.service.TmpDataService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,9 +23,11 @@ import com.google.gson.Gson;
 @WebServlet("/list-available-rooms")
 public class ListAvailableRoomsController extends HttpServlet {
     private DomainService domainService;
+    private TmpDataService tmpDataService;
 
     public void init() {
         domainService = (DomainService) getServletContext().getAttribute("domainService");
+        tmpDataService = (TmpDataService) getServletContext().getAttribute("tmpDataService");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -34,28 +37,15 @@ public class ListAvailableRoomsController extends HttpServlet {
         LocalDateTime checkOutDateTime = LocalDateTime.of(checkOut, LocalTime.of(12, 0));
 
         List<RoomDto> availableRooms = domainService.getAvailableRooms(checkInDateTime, checkOutDateTime);
+        // add room prices to the roomType
+        for (RoomDto room : availableRooms) {
+            room.setRoomTypeName(room.getRoomTypeName());
+            room.setRoomStateName(tmpDataService.getPrice(room.getRoomTypeName()).toString());
+        }
         String json = new Gson().toJson(availableRooms);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);
-    }
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-        String selectedRooms = request.getParameter("rooms");
-        Pattern p = Pattern.compile("[0-9]+");
-        Matcher m = p.matcher(selectedRooms);
-
-        List<RoomDto> selectedRoomList = new ArrayList<>();
-        List<RoomDto> rooms = domainService.getAll(RoomDto.class);
-
-        while (m.find()) {
-            Integer roomNumber = Integer.parseInt(m.group());
-            for (RoomDto room : rooms) {
-                if (room.getRoomNumber().equals(roomNumber)) {
-                    selectedRoomList.add(room);
-                }
-            }
-        }
     }
 }
